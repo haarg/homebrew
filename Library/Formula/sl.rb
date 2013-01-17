@@ -10,9 +10,23 @@ class Sl < Formula
     build 318
   end
 
+  def patches
+    [
+      "http://ftp.us.debian.org/debian/pool/main/s/sl/sl_3.03-16.diff.gz",
+      "debian/patches/10_modify_Makefile.dpatch",
+      "debian/patches/20_remove_SIGINT.dpatch",
+      "debian/patches/30_add_-e_option.dpatch",
+      "debian/patches/40_apply_sl-h.dpatch",
+      "debian/patches/50_sigtstp.dpatch"
+    ]
+  end
+
   def install
+    ENV.append 'LDFLAGS', '-lcurses'
     system "make -e"
     bin.install "sl"
-    man1.install "sl.1"
+    bin.install "sl-h"
+    man6.install "debian/man/man6/sl.6"
+    man6.install "debian/man/man6/sl-h.6"
   end
 end
