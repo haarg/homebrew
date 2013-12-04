@@ -35,6 +35,11 @@ class Git < Formula
     sha1 '3901432173bcc3892a7be8ea2637a7d763015013'
   end
 
+  resource 'NetSMTPSSL' do
+    url 'http://www.cpan.org/authors/id/C/CW/CWEST/Net-SMTP-SSL-1.01.tar.gz'
+    sha1 '2acccf803a6b0b5f71bd3ebed41434afb99d5e16'
+  end
+
   def patches
     if MacOS.version >= :mavericks
       # Allow using PERLLIB_EXTRA to find Subversion Perl bindings location
@@ -123,6 +128,8 @@ class Git < Formula
 
     # Make html docs world-readable; check if this is still needed at 1.8.6
     chmod 0644, Dir["#{share}/doc/git-doc/**/*.{html,txt}"]
+
+    resource('NetSMTPSSL').stage {(lib+'perl5/site_perl').install 'lib/Net'}
   end
 
   def caveats; <<-EOS.undent
